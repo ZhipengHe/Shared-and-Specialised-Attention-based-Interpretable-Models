@@ -1,5 +1,7 @@
 ## Building Interpretable Models for Business Process Prediction using Shared and Specialised Attention Mechanisms
 
+> Please install `Git LFS` if you want to clone this repo.
+
 ### Environment
 
 - Jupyter Lab
