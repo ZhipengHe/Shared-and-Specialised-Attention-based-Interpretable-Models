@@ -35,12 +35,48 @@ def _params_bpic12(MILESTONE_DIR, MY_WORKSPACE_DIR, MILESTONE, EXPERIMENT, N_SIZ
 
     return parameters
 
+def _params_bpic17(MILESTONE_DIR, MY_WORKSPACE_DIR, MILESTONE, EXPERIMENT, N_SIZE):
+
+    parameters = dict()
+
+    parameters['folder'] =  os.path.join(MILESTONE_DIR, "output_files")
+    #       Specific model training parameters
+    parameters['lstm_act'] = None # optimization function see keras doc
+    parameters['dense_act'] = None # optimization function see keras doc
+    parameters['optim'] = 'Adam' #'Adagrad' # optimization function see keras doc
+    parameters['norm_method'] = 'lognorm' # max, lognorm
+    # Model types --> specialized, concatenated, shared_cat, joint, shared
+    parameters['model_type'] = 'shared_cat'
+    parameters['l_size'] = 50 # LSTM layer sizes
+    parameters['n_size'] = N_SIZE
+    #    Generation parameters
+
+    parameters['file_name'] = os.path.join(MY_WORKSPACE_DIR,'BPIC_2017_Prefixes.csv') 
+    parameters['file_name_all'] = os.path.join(MY_WORKSPACE_DIR,'BPIC_2017_Prefixes_all.csv') 
+    parameters['processed_file_name'] = os.path.join(MILESTONE_DIR, 'BPIC_2017_Processed.csv')
+    parameters['processed_training_vec'] = os.path.join(MILESTONE_DIR,'vec_training.p')
+    parameters['processed_test_vec'] = os.path.join(MILESTONE_DIR, 'vec_test.p')
+    parameters['processed_val_vec'] = os.path.join(MILESTONE_DIR, 'vec_val.p')
+    parameters['weights'] = os.path.join(MILESTONE_DIR ,'weights.p')
+    parameters['indexes'] = os.path.join(MILESTONE_DIR, 'indexes.p')
+    parameters['pre_index'] = os.path.join(MILESTONE_DIR, 'pre_index.p') 
+    parameters['args'] = os.path.join(MILESTONE_DIR,'args.p')
+    parameters['milestone']=MILESTONE
+    parameters['experiment'] = EXPERIMENT
+    parameters['prefix_length']='fixed' #'variable'
+
+    parameters['log_name'] = 'bpic17'
+
+    return parameters
+
 def get_parameters(dataset, MILESTONE_DIR, MY_WORKSPACE_DIR, MILESTONE, EXPERIMENT,N_SIZE):
     
     if dataset == 'bpic12':
         return _params_bpic12(MILESTONE_DIR, MY_WORKSPACE_DIR, MILESTONE, EXPERIMENT,N_SIZE)
+    elif dataset == 'bpic17':
+        return _params_bpic17(MILESTONE_DIR, MY_WORKSPACE_DIR, MILESTONE, EXPERIMENT,N_SIZE)
     else:
-        raise  ValueError("Please specific dataset 'bpic12'")
+        raise  ValueError("Please specific dataset 'bpic12' or 'bpic17'")
 
 def saver(args, vec_train, vec_test, ac_weights, rl_weights, ne_index, index_ac, index_rl, index_ne):
 
